@@ -1,29 +1,30 @@
-from PyQt5.QtCore import *
+from PyQt5.QtCore import *                #this package for graphical user interface.
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QFont
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import QMessageBox
-from docx import Document
+from docx import Document                  #this package used to create docx document for the user.
 from docx.shared import Inches
 import io
-import csv
+import csv                                # this   package used to analysis of comma separated values .
 from PyQt5.Qt import *
 import sys
-import xlrd
-import xlwt 
+import xlrd                               #this package used to read the excel files.
+import xlwt                               #this package used to write the excel files.
 from xlwt import Workbook 
 
 class MainWindow(QtWidgets.QWidget):
-
+'''second window to get the staff name ,designation of staff,subject name ,subject code,year and section and branch of the students.
+To get the excel file of the students '''
     switch_window = QtCore.pyqtSignal()
     switch_window1 = QtCore.pyqtSignal()
 
-
+    
     def __init__(self):
         QtWidgets.QWidget.__init__(self)
-        self.setWindowTitle('Mark Easy(40%)')
+        self.setWindowTitle('Mark Easy(40%)')#indicate  the user to percentage of process completed.
         #self.resize(1300, 700)
 
         layout = QtWidgets.QGridLayout()
@@ -164,6 +165,7 @@ class MainWindow(QtWidgets.QWidget):
             QMessageBox.about(self, "Please Listen ","enter the details  "+str(self.msg))
 
     def finish(self):
+        '''to get the excel file'''
         fileName, _ = QtWidgets.QFileDialog.getOpenFileName(self, "Open Excel File "+str(staffname),
                (QtCore.QDir.homePath()), "Excel (*.xlsx *.xls)")
         if fileName:
@@ -223,7 +225,7 @@ class MainWindow(QtWidgets.QWidget):
             section=self.section
             self.finish()
 class MainWindow1(QtWidgets.QWidget):
-
+'''third window to get the number  of questions in the part A,B & C.'''
     switch_window = QtCore.pyqtSignal()
     switch_window1 = QtCore.pyqtSignal()
 
@@ -14426,6 +14428,7 @@ class adminWindow(QtWidgets.QWidget):
         layout.addWidget(self.lineedit, 3, 2)
         
     def openfile(self):
+        #to open excel file
         fileName, _ = QtWidgets.QFileDialog.getOpenFileName(self, "Open Excel",
                (QtCore.QDir.homePath()), "Excel (*.xlsx *.xls)")
         if fileName:
@@ -14472,6 +14475,7 @@ class adminWindow(QtWidgets.QWidget):
                     self.tablewidget.setItem(row1, col1, (newitem))        
         
     def registerinput(self):
+        #creating the rows of the tabelewidget
         text,result=QInputDialog.getInt(self,'inputdialog',"enter rows")
         if result==True:
             self.ddd=text
@@ -14481,6 +14485,7 @@ class adminWindow(QtWidgets.QWidget):
         #print(self.ddd)
     
     def getData(self):
+        #get data from the tablewidget having many more cells. 
         self.rtr=self.tablewidget.rowCount()
         rowgiven=self.rtr
         data=[]
@@ -14506,6 +14511,7 @@ class adminWindow(QtWidgets.QWidget):
         if (ev.key() == Qt.Key_C) and (ev.modifiers() & Qt.ControlModifier): 
             self.copySelection()
     def copySelection(self):
+        #copy selection process to copy the required values.
         selection = self.tablewidget.selectedIndexes()
         data=self.data
         if selection:
@@ -14524,6 +14530,7 @@ class adminWindow(QtWidgets.QWidget):
             QApplication.clipboard().setText(stream.getvalue())
         
     def pasteSelection(self):
+        #paste selection process of the students marks.
         selection = self.tablewidget.selectedIndexes()
         if selection:
             model = self.tablewidget.model()
@@ -14546,7 +14553,7 @@ class adminWindow(QtWidgets.QWidget):
                     model.setData(model.index(index.row(), index.column()), arr[row][column])
     
 class Controller:
-
+'''cotrol the windows order'''
     def __init__(self):
         pass
 
@@ -14598,9 +14605,9 @@ class Controller:
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
-    app.setStyle('Fusion')#Windows,Fusion,Plastique,Breeze,Oxygen
+    app.setStyle('Fusion')#defines the style of graphical window(Windows,Fusion,Plastique,Breeze,Oxygen)
     
-    palette = QPalette()
+    palette = QPalette()#defines the color of the window components
     palette.setColor(QPalette.Window, QColor(53,53,53,225))
     palette.setColor(QPalette.WindowText, Qt.white)
     palette.setColor(QPalette.Base, QColor(25, 25, 25,255))
